@@ -10,22 +10,12 @@
  */
 class Solution {
 public:
-
-    void insertAtHead(ListNode* &head, int d){
-        //new node create
-        ListNode* temp = new ListNode(d);
-        temp -> next = head;
-        head = temp;
-    }
-
     ListNode* reverseList(ListNode* head) {
-        if(head == NULL) return NULL;
-        ListNode* ans = new ListNode(head->val);
-        ListNode* temp = head -> next;
-        while(temp != NULL){
-            insertAtHead(ans,temp->val);
-            temp = temp -> next;
-        }
-        return ans;
+        if(head == NULL || head -> next == NULL) return head;
+        ListNode* prev = NULL;
+        ListNode* h = reverseList(head -> next);
+        head -> next -> next = head;
+        head -> next = prev;
+        return h;
     }
 };
