@@ -1,29 +1,11 @@
 class Solution {
 public:
-    void bfs(vector<vector<char>>& grid, int i, int j, int n, int m){
-        queue<pair<int, int>>q;
-        q.push({i, j});
+    void dfs(vector<vector<char>>& grid, int i, int j, int n, int m){
         grid[i][j] = 0;
-        while(!q.empty()){
-            auto [a, b] = q.front();
-            q.pop();
-            if(b+1<m && grid[a][b+1] == '1'){
-                grid[a][b+1] = 0;
-                q.push({a, b+1});
-            }
-            if(a+1<n && grid[a+1][b] == '1'){
-                grid[a+1][b] = 0;
-                q.push({a+1, b});
-            }
-            if(b-1>=0 && grid[a][b-1] == '1'){
-                grid[a][b-1] = 0;
-                q.push({a, b-1});
-            }
-            if(a-1>=0 && grid[a-1][b] == '1'){
-                grid[a-1][b] = 0;
-                q.push({a-1, b});
-            }
-        }
+        if(i-1>=0 && grid[i-1][j] == '1') dfs(grid, i-1, j, n, m);
+        if(j-1>=0 && grid[i][j-1] == '1') dfs(grid, i, j-1, n, m);
+        if(i+1<n && grid[i+1][j] == '1') dfs(grid, i+1, j, n, m);
+        if(j+1<m && grid[i][j+1] == '1') dfs(grid, i, j+1, n, m); 
     }
 
     int numIslands(vector<vector<char>>& grid) {
@@ -32,7 +14,7 @@ public:
             for(int j=0;j<m;j++){
                 if(grid[i][j] == '1'){
                     ans++;
-                    bfs(grid, i, j, n, m);
+                    dfs(grid, i, j, n, m);
                 }
             }
         }
