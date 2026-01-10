@@ -2,20 +2,19 @@ class Solution {
 public:
     bool isPalindrome(string s) {
         int n = s.size();
-        int l = 0, r = n-1;
-        while(l<r){
-            if(isalnum(s[l]) && isalnum(s[r])){
-                char a = s[l], b = s[r];
-                a = tolower(a);
-                b = tolower(b);
-                if(a == b){
-                    l++;
-                    r--;
-                }
-                else return false;
+        string ans = "";
+        for(int i=0;i<n;i++){
+            int c = s[i];
+            if(c >= 65 && c <= 90){
+                c += 32;
+                ans += (char)c;
             }
-            else if(isalnum(s[l])) r--;
-            else l++;
+            else if(c >= 97 && c <= 122) ans += (char)c;
+            else if(c >= 48 && c <= 57) ans += (char)c;
+        }
+        n = ans.size();
+        for(int i=0;i<n;i++){
+            if(ans[i] != ans[n-i-1]) return false;
         }
         return true;
     }
